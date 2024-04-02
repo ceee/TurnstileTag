@@ -18,7 +18,7 @@ public class TurnstileTagHelper : TagHelper
   /// <summary>
   /// Whether turnstile should be activated.
   /// </summary>
-  public bool? AppTurnstile { get; set; }
+  public bool? CfTurnstile { get; set; }
 
   /// <summary>
   /// Gets the <see cref="Rendering.ViewContext"/> of the executing view.
@@ -30,7 +30,7 @@ public class TurnstileTagHelper : TagHelper
 
   public override void Process(TagHelperContext context, TagHelperOutput output)
   {
-    if (AppTurnstile ?? false)
+    if (CfTurnstile ?? false)
     {
       IHtmlContent content = _turnstile.GenerateTurnstileFormHtml(ViewContext!);
       if (content != null)
