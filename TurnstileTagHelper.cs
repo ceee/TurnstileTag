@@ -1,24 +1,15 @@
-﻿using Microsoft.AspNetCore.Html;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using Microsoft.Extensions.Options;
 
 namespace TurnstileTag;
 
-[HtmlTargetElement("form", Attributes = "cf-turnstile")]
+[HtmlTargetElement("cf-turnstile-input", TagStructure = TagStructure.NormalOrSelfClosing)]
 public class TurnstileTagHelper : TagHelper
 {
-  readonly ITurnstile _turnstile;
+  readonly IOptions<TurnstileOptions> _options;
 
-  public TurnstileTagHelper(ITurnstile turnstile)
-  {
-    _turnstile = turnstile;
-  }
-
-  /// <summary>
-  /// Whether turnstile should be activated.
-  /// </summary>
-  public bool? CfTurnstile { get; set; }
 
   /// <summary>
   /// Gets the <see cref="Rendering.ViewContext"/> of the executing view.
@@ -28,15 +19,18 @@ public class TurnstileTagHelper : TagHelper
   public ViewContext? ViewContext { get; set; }
 
 
+  public TurnstileTagHelper(IOptions<TurnstileOptions> options)
+  {
+    _options = options;
+  }
+
+
   public override void Process(TagHelperContext context, TagHelperOutput output)
   {
-    if (CfTurnstile ?? false)
-    {
-      IHtmlContent content = _turnstile.GenerateTurnstileFormHtml(ViewContext!);
-      if (content != null)
-      {
-        output.PostContent.AppendHtml(content);
-      }
-    }
+    output.TagMode = TagMode.StartTagAndEndTag;
+    output.TagName = "div";
+    output.Attributes.Add("class", "cf-turnstile");
+    output.Attributes.Add("data-sitekey", _options.Value.PublicKey);
+    ViewContext!.ViewData.TryAdd("turnstile", true);
   }
 }

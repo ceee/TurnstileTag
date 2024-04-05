@@ -9,9 +9,30 @@ namespace TurnstileTag;
 
 public interface ITurnstile
 {
+  /// <summary>
+  /// Generates the placeholder which renders the turnstile challenge.
+  /// </summary>
+  public IHtmlContent GetInputHtml();
+
+
+  /// <summary>
+  /// Generates the script tag which loads the turnstile library.
+  /// </summary>
+  public IHtmlContent GetScriptHtml();
+
+  /// <summary>
+  /// 
+  /// </summary>
   IHtmlContent GenerateTurnstileFormHtml(ViewContext viewContext);
-  IHtmlContent GetHtml();
+
+  /// <summary>
+  /// 
+  /// </summary>
   Task ValidateRequestAsync(HttpContext httpContext);
+
+  /// <summary>
+  /// 
+  /// </summary>
   Task<bool> Verify(string value);
 }
 
@@ -27,6 +48,7 @@ public class Turnstile : ITurnstile
   }
 
 
+  /// <inheritdoc />
   public async Task ValidateRequestAsync(HttpContext httpContext)
   {
     ArgumentNullException.ThrowIfNull(httpContext);
@@ -61,6 +83,7 @@ public class Turnstile : ITurnstile
   }
 
 
+  /// <inheritdoc />
   public async Task<bool> Verify(string value)
   {
     using HttpClient http = new();
@@ -74,20 +97,25 @@ public class Turnstile : ITurnstile
   }
 
 
-  /// <summary>
-  /// Generates the placeholder which renders the turnstile challenge.
-  /// </summary>
-  public IHtmlContent GetHtml()
+  /// <inheritdoc />
+  public IHtmlContent GetInputHtml()
   {
     HtmlContentBuilder builder = new();
     builder.AppendHtml($"<div class=\"cf-turnstile\" data-sitekey=\"{_options.PublicKey}\"></div>");
-    builder.AppendHtml($"<script src=\"{_options.ApiUrl}/api.js\" async defer></script>");
-    //<script src="@(Model.Turnstile.Options.ApiUrl)/api.js" async defer></script>
-    //<div class="cf-turnstile" data-sitekey="@Model.Turnstile.Options.PublicKey"></div> 
     return builder;
   }
 
 
+  /// <inheritdoc />
+  public IHtmlContent GetScriptHtml()
+  {
+    HtmlContentBuilder builder = new();
+    builder.AppendHtml($"<script src=\"{_options.ApiUrl}/api.js\" async defer></script>");
+    return builder;
+  }
+
+
+  /// <inheritdoc />
   public IHtmlContent GenerateTurnstileFormHtml(ViewContext viewContext)
   {
     ArgumentNullException.ThrowIfNull(viewContext);
@@ -103,7 +131,8 @@ public class Turnstile : ITurnstile
       formContext.FormData.Add("turnstile", true);
     }
 
-    return GetHtml();
+    viewContext.ViewData.TryAdd("turnstile", true);
+    return GetInputHtml();
   }
 
 
