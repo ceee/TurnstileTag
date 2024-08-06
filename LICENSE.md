@@ -1,4 +1,4 @@
-Copyright (c) 2024 Tobias Klika
+Copyright (c) 2024 switchcase
 
 MIT License
 
