@@ -37,9 +37,9 @@ internal partial class ValidateTurnstileAuthorizationFilter : IAsyncAuthorizatio
     {
       await _turnstile.ValidateRequestAsync(context.HttpContext);
     }
-    catch (AntiforgeryValidationException exception)
+    catch (Exception ex)
     {
-      Log.TurnstileInvalid(_logger, exception.Message, exception);
+      Log.TurnstileInvalid(_logger, ex.Message, ex);
       context.Result = new AntiforgeryValidationFailedResult();
     }
   }
