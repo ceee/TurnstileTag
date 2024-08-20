@@ -6,7 +6,6 @@
     <RootNamespace>TurnstileTag</RootNamespace>
     <AssemblyName>TurnstileTag</AssemblyName>
     <Version>1.0.0</Version>
-    <DebugType>embedded</DebugType>
   </PropertyGroup>
 
   <PropertyGroup>
