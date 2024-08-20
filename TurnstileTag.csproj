@@ -3,8 +3,29 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <RootNamespace>TurnstileTag</RootNamespace>
+    <AssemblyName>TurnstileTag</AssemblyName>
+    <Version>1.0.0</Version>
     <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Product>TurnstileTag</Product>
+    <Title>TurnstileTag</Title>
+    <Copyright>Copyright © Tobias Klika 2024</Copyright>
+    <Tags>Vite, npm, middleware, server, development</Tags>
+    <Authors>Tobias Klika</Authors>
+    <Description>TurnstileTag renders a hidden turnstile captcha within ASP.NET Core.</Description>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/ceee/TurnstileTag.git</RepositoryUrl>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <PackageId>TurnstileTag</PackageId>
+    <PackageProjectUrl>https://github.com/ceee/TurnstileTag</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
